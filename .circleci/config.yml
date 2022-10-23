@@ -9,6 +9,7 @@ jobs:
       - run:
           name: Install MUSL
           command: |
+            sudo apt update && sudo apt-get install musl-tools -y
             wget http://www.musl-libc.org/releases/musl-1.1.10.tar.gz
             tar -xvf musl-1.1.10.tar.gz
             cd musl-1.1.10
