@@ -9,7 +9,7 @@ jobs:
       - run:
           name: Install MUSL
           command: |
-            sudo apt update && sudo apt-get install musl-dev musl-tools -y
+            sudo apt update && sudo apt-get install build-essential musl-dev musl-tools -y
             # wget http://www.musl-libc.org/releases/musl-1.1.10.tar.gz
             # tar -xvf musl-1.1.10.tar.gz
             # cd musl-1.1.10
