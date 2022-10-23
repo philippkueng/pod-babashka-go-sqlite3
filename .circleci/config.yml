@@ -10,20 +10,13 @@ jobs:
           name: Install MUSL
           command: |
             sudo apt update && sudo apt-get install build-essential musl-dev musl-tools -y
-            # wget http://www.musl-libc.org/releases/musl-1.1.10.tar.gz
-            # tar -xvf musl-1.1.10.tar.gz
-            # cd musl-1.1.10
-            # CC=musl-gcc ./configure
-            # make
-            # sudo make install
-            # ls -la /usr/local/musl/bin/
-            musl-gcc -h
+            musl-gcc --version
       - restore_cache:
           keys:
             - pod-babashka-go-sqlite3-{{ checksum "go.sum" }}-{{ checksum ".circleci/config.yml" }}
       - run:
           name: Build binary
-          command: CC=/usr/local/musl/bin/musl-gcc go build --ldflags '-linkmode external -extldflags "-static"' -o pod-babashka-go-sqlite3 main.go
+          command: CC=/usr/bin/musl-gcc go build --ldflags '-linkmode external -extldflags "-static"' -o pod-babashka-go-sqlite3 main.go
       - run:
           name: Install bb for test
           command: |
