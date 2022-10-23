@@ -16,7 +16,7 @@ jobs:
             - pod-babashka-go-sqlite3-{{ checksum "go.sum" }}-{{ checksum ".circleci/config.yml" }}
       - run:
           name: Build binary
-          command: CC=/usr/bin/musl-gcc go build --ldflags '-linkmode external -extldflags "-static"' -o pod-babashka-go-sqlite3 main.go
+          command: CC=/usr/bin/musl-gcc CGO_ENABLED=0 go build --ldflags '-linkmode external -extldflags "-static"' -o pod-babashka-go-sqlite3 main.go
       - run:
           name: Install bb for test
           command: |
