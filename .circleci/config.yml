@@ -15,6 +15,7 @@ jobs:
             ./configure
             make
             sudo make install
+            ls -la /usr/local/musl/bin/
       - restore_cache:
           keys:
             - pod-babashka-go-sqlite3-{{ checksum "go.sum" }}-{{ checksum ".circleci/config.yml" }}
