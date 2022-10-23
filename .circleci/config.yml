@@ -16,7 +16,8 @@ jobs:
             CC=musl-gcc ./configure
             make
             sudo make install
-            ls -la /usr/local/musl/bin/
+            # ls -la /usr/local/musl/bin/
+            musl-gcc -h
       - restore_cache:
           keys:
             - pod-babashka-go-sqlite3-{{ checksum "go.sum" }}-{{ checksum ".circleci/config.yml" }}
