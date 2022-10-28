@@ -24,7 +24,7 @@ jobs:
           name: Build binary
           command: |
             export PATH=$PATH:"$HOME/project/zig-linux-x86_64-0.9.1"
-            CC="zig cc" CXX="zig cc" GOOS=linux GOARCH=amd64 CGO_ENABLED=1 go build --ldflags '-linkmode external -extldflags "-static"' -o pod-babashka-go-sqlite3 main.go
+            CGO_ENABLED=1 CC="zig cc -target native-native-musl" CXX="zig cc -target native-native-musl" go build -o pod-babashka-go-sqlite3 main.go
       - run:
           name: Install bb for test
           command: |
