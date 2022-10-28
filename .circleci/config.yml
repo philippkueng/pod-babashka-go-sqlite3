@@ -11,12 +11,20 @@ jobs:
           command: |
             sudo apt update && sudo apt-get install build-essential musl-dev musl-tools -y
             musl-gcc --version
+      # path will be: /home/circleci/project/zig-linux-x86_64-0.9.1
+      - run:
+          name: Install Zig
+          command: |
+            wget https://ziglang.org/download/0.9.1/zig-linux-x86_64-0.9.1.tar.xz
+            tar -xvkf zig-linux-x86_64-0.9.1.tar.xz
       - restore_cache:
           keys:
             - pod-babashka-go-sqlite3-{{ checksum "go.sum" }}-{{ checksum ".circleci/config.yml" }}
       - run:
           name: Build binary
-          command: CC=/usr/bin/musl-gcc GOOS=linux GOARCH=amd64 CGO_ENABLED=1 go build --ldflags '-linkmode external -extldflags "-static"' -o pod-babashka-go-sqlite3 main.go
+          command: |
+            export PATH=$PATH:"$HOME/project/zig-linux-x86_64-0.9.1"
+            CC="zig cc" CXX="zig cc" GOOS=linux GOARCH=amd64 CGO_ENABLED=1 go build --ldflags '-linkmode external -extldflags "-static"' -o pod-babashka-go-sqlite3 main.go
       - run:
           name: Install bb for test
           command: |
